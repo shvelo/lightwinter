@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<style>
+    @import url('style.css');
+</style>
+
+<div class="box-wrapper">
+<div class="box">
+<div class="content">
+    <table id="user_table"></table>
+    <table id="message_table" style="margin: auto; display: none;"><td id="message_label"></td></table>
+    <table id="password_table" style="margin: auto; display: none; color: red;"><tr>
+    <td id="password_prompt"></td>
+    <td><form action="javascript: provide_secret()"><input id="password_entry" type="password" /></form></td>
+    </tr></table>
+</div>
+</div>
+</div>
+
+<script src="jquery.min.js"></script>
+<script src="script.js"></script>
+

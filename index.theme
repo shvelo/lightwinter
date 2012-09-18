@@ -1,0 +1,6 @@
+[theme]
+name=Nick's Theme
+description=Nick's Theme
+engine=lightdm-webkit-greeter
+url=index.html
+session=lxsession
