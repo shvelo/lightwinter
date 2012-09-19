@@ -1,21 +1,14 @@
 var password_prompt = false;
 var selected_user = null;
-var time_remaining = 0
+var time_remaining = 0;
+var session = lightdm.session;
 
 function show_prompt(text) {
    password_prompt = true;
 
    $('tr.password').insertAfter('[data-id="'+selected_user+'"]').slideDown('slow');
 
-   var label = $('#password_prompt');
-   label.html(text);
-   
-   var entry = $('#password_entry');
-   entry.val('');
-
-   var table = $('#password_table');
-
-   entry.focus();
+   $('tr.password .input').focus();
 }
 
 function show_message(text) {
@@ -50,10 +43,11 @@ function throbber() {
 }
 
 function authentication_complete() {
-   if (lightdm.is_authenticated)
-       lightdm.login (lightdm.authentication_user, lightdm.default_session);
-   else
+   if (lightdm.is_authenticated) {
+       lightdm.login (lightdm.authentication_user, session);
+   } else {
        show_message ("Authentication Failed");
+   }
 
    reset ();
    setTimeout(throbber, 1000);
@@ -73,6 +67,11 @@ function start_authentication(username) {
        selected_user = username;
        lightdm.start_authentication(username);
    }
+}
+
+function cancel_authentication() {
+    lightdm.cancel_authentication();
+    password_prompt = false;
 }
 
 function provide_secret() {
@@ -95,8 +94,52 @@ $(function(){
     
     $('#shutdown').click(lightdm.shutdown);
     
+    var user_template = new t($('#user-template').html());
+    
+    for(i in lightdm.users.reverse()) {
+        var user = lightdm.users[i];
+        $('#user_table').prepend(user_template.render({
+            id: user.name,
+            name: user.display_name,
+            image: user.image,
+            logged_in: user.logged_in
+        }));
+    }
+    
+    var session_template = new t($('#session-template').html());
+    
+    for(i in lightdm.sessions) {
+        var sess = lightdm.sessions[i];
+        
+        var image;
+        switch(sess.key){
+            case 'gnome':
+                image = "gnome.png";
+                break;
+            default:
+                image = "default.png";
+                break;
+        }
+        
+        $('#session_table').prepend(session_template.render({
+            id: sess.key,
+            name: sess.name,
+            comment: sess.comment,
+            image: image
+        }));
+    }
+    
+    $('#session_table .session[data-id="'+ lightdm.session +'"]').addClass('active');
+    
     $('.user').click(function(){
+        cancel_authentication();
         start_authentication($(this).data('id'));
+    });
+    
+    $('.session').click(function(){
+        $('#session_table .session').removeClass('active');
+        session = $(this).data('id');
+        $(this).addClass('active');
     });
     
     $('.password .input').on('focus', function(){
@@ -110,7 +153,7 @@ $(function(){
         }
     });
     
-    $('[data-id="'+ lightdm.timed_login_user +'"]').addClass('active');
+    $('#users_table .user[data-id="'+ lightdm.timed_login_user +'"]').addClass('active');
     
     time_remaining = lightdm.timed_login_delay;
     if (time_remaining > 0)

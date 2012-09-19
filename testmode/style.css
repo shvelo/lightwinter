@@ -9,6 +9,18 @@ body {
     background-size: cover;
 }
 
+#corner {
+    position: absolute;
+    z-index: 998;
+    width: 50px;
+    height: 50px;
+    top: 0;
+    right: 0;
+    border-bottom-left-radius: 50%;
+    background: rgba(255,255,255, .4);
+    border: 1px solid rgba(255,255,255, .8);
+}
+
 #shutdown {
     display: none;
     position: absolute;
@@ -52,22 +64,38 @@ body {
     border-radius: 3px;
 }
 
-#user_table tr {
+.left, .right {
+    float: left;
+}
+
+.left {
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 1px solid #999;
+}
+
+header {
+    display: block;
+    text-align: center;
+    font-size: 1.4em;
+}
+
+#user_table tr, #session_table tr {
     cursor: pointer;
     text-align: left;
     -webkit-transition-duration: .5s;
     font-size: 1.2em;
 }
 
-#user_table tr:hover {
+#user_table tr:hover, #session_table tr:hover {
     text-shadow: 0px 0px 3px rgba(0,0,0,.4);
 }
 
-#user_table td:nth-child(2) {
+#user_table td:nth-child(2), #session_table td:nth-child(2) {
     padding-left: 5px;
 }
 
-#user_table img {
+#user_table img, #session_table img {
     width: 48px;
     height: 48px;
     border-radius: 3px;
@@ -91,6 +119,10 @@ tr.password {
     display: none;
 }
 
+.session.active {
+    color: #9ED604;
+}
+
 .password .label {
     padding: 3px 4px;
     border: 1px solid #777;
@@ -107,4 +139,5 @@ tr.password {
     outline: none;
     display: block;
     line-height: 1.4em;
+    text-align: center;
 }

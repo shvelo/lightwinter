@@ -68,7 +68,8 @@ function _login ()
 
 function LightDMClass ()
 {
-    this.users = [new LightDMUser("alice", "Alice", "http://people.ubuntu.com/~robert-ancell/lightdm/astronaut.jpg", false),
+    this.users = [new LightDMUser("nick", "Nick Shvelidze", "avatar-default.png", false),
+                  new LightDMUser("alice", "Alice", "http://people.ubuntu.com/~robert-ancell/lightdm/astronaut.jpg", false),
                   new LightDMUser("bob", "Bob", "http://people.ubuntu.com/~robert-ancell/lightdm/baseball.png", true),
                   new LightDMUser("carol", "Carol", "http://people.ubuntu.com/~robert-ancell/lightdm/coffee.jpg", false)];
     this.num_users = this.users.length;
