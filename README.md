@@ -1,6 +1,10 @@
-# Winter Theme for lightdm-webkit-greeter
+# Lightwinter
 
-Early dev
+Winter Theme for lightdm-webkit-greeter.
+
+## Demo
+
+[shvelo.github.com/lightwinter/](http://shvelo.github.com/lightwinter/)
 
 ## Installation
 
