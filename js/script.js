@@ -49,6 +49,7 @@ function timed_login(user) {
 
 function set_session(key) {
     session = key;
+    $('#session_table .session').removeClass('active');
     $('#session_table .session[data-id="' + session + '"]').addClass('active');
 }
 
