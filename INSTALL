@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
+THM="/usr/share/lightdm-webkit/themes"
+CONF="/etc/lightdm/lightdm-webkit-greeter.conf"
 
-sudo cp . /usr/share/lightdm-webkit/themes/
+if [ ! -d ${THM} ]
+then
+  sudo mkdir -p ${THM}
+fi
 
-config=`cat /etc/lightdm/lightdm-webkit-greeter.conf`
-sudo echo ${config//^webkit-theme=(.*)$/lightwinter} >/etc/lightdm/lightdm-webkit-greeter.conf
+sudo cp . ${THM}/
+
+if [ -f ${CONF} ]
+then
+  sudo cp ${CONF} ${CONF}-bak
+fi
+
+config=`cat ${CONF}`
+sudo echo ${config//^webkit-theme=(.*)$/lightwinter} >${CONF}
 
 exit
