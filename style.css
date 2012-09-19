@@ -147,7 +147,7 @@ tr.password, .other-user-login {
     text-align: center;
 }
 
-.error .label, .pass-wrapper.error {
+.error .label, .pass-wrapper .error {
     border-color: red;
 }
 

@@ -65,8 +65,10 @@ function cancel_authentication() {
     lightdm.cancel_authentication();
     password_prompt = false;
     $('.password, .pass-wrapper').removeClass('error');
-    $('.password .input, .wrapper').text('');
-    $('.password, .other-user-login').slideUp('slow');
+    $('.password .input, .pass').text('');
+    $('.other-user-login .name').text('');
+    $('.password, .other-user-login, .pass-wrapper').slideUp('slow');
+    
 }
 
 function provide_secret() {
@@ -178,4 +180,11 @@ $(function(){
     time_remaining = lightdm.timed_login_delay;
     if (time_remaining > 0)
         countdown();
+        
+    var left_height = $('.left').innerHeight();
+    var right_height = $('.right').innerHeight();
+    if(left_height > right_height)
+        $('.right').css('height', left_height);
+    else
+        $('.left').css('height', right_height);
 });
