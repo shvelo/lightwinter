@@ -1,7 +1,9 @@
 var password_prompt = false;
 var selected_user = null;
 var time_remaining = 0;
-var session = lightdm.session;
+var session = lightdm.default_session;
+
+var users = {};
 
 function show_prompt(text) {
 }
@@ -47,12 +49,18 @@ function timed_login(user) {
    setTimeout(throbber, 1000);
 }
 
+function set_session(key) {
+    session = key;
+    $('#session_table .session[data-id="'+ session +'"]').addClass('active');
+}
+
 function start_authentication(username) {
    lightdm.cancel_timed_login ();
    $('#user_table tr').removeClass('active');
 
    if (!password_prompt) {
        selected_user = username;
+       set_session(users[username].session);
        lightdm.start_authentication(username);
        
        password_prompt = true;
@@ -95,6 +103,7 @@ $(function(){
     
     for(i in lightdm.users.reverse()) {
         var user = lightdm.users[i];
+        users[user.name] = user;
         $('#user_table').prepend(user_template.render({
             id: user.name,
             name: user.display_name,
@@ -126,7 +135,7 @@ $(function(){
         }));
     }
     
-    $('#session_table .session[data-id="'+ lightdm.session +'"]').addClass('active');
+    $('#session_table .session[data-id="'+ session +'"]').addClass('active');
     
     $('.user').click(function(){
         cancel_authentication();
