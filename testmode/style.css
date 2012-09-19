@@ -7,6 +7,7 @@ html, body {
 body {
     background-image: url('bg.jpg');
     background-size: cover;
+    font-family: ubuntu;
 }
 
 #corner {
@@ -95,6 +96,10 @@ header {
     padding-left: 5px;
 }
 
+#session_table td:nth-child(2) {
+    padding-right: 3em;
+}
+
 #user_table img, #session_table img {
     width: 48px;
     height: 48px;
@@ -119,7 +124,7 @@ tr.password {
     display: none;
 }
 
-.session.active {
+.session.active, .user.active {
     color: #9ED604;
 }
 

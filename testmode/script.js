@@ -62,7 +62,6 @@ function start_authentication(username) {
    lightdm.cancel_timed_login ();
    $('#user_table tr').removeClass('active');
 
-   show_message("");
    if (!password_prompt) {
        selected_user = username;
        lightdm.start_authentication(username);
@@ -137,6 +136,9 @@ $(function(){
     });
     
     $('.session').click(function(){
+        lightdm.cancel_timed_login ();
+        $('#user_table tr').removeClass('active');
+        
         $('#session_table .session').removeClass('active');
         session = $(this).data('id');
         $(this).addClass('active');
@@ -153,7 +155,7 @@ $(function(){
         }
     });
     
-    $('#users_table .user[data-id="'+ lightdm.timed_login_user +'"]').addClass('active');
+    $('#user_table .user[data-id="'+ lightdm.timed_login_user +'"]').addClass('active');
     
     time_remaining = lightdm.timed_login_delay;
     if (time_remaining > 0)
