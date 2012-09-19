@@ -16,7 +16,7 @@ Edit `/etc/lightdm/lightdm.conf` and set `greeter-session` to `lightdm-webkit-gr
 
 ### Install theme
 
-Copy files to `/usr/share/lightdm-webkit/themes/lightwinter`.
+Copy files to `/usr/share/lightdm-webkit/themes/lightwinter`.  
 Edit `/etc/lightdm-webkit-greeter.conf` and set `webkit-theme` to `lightwinter`, like this:
 
     [greeter]
