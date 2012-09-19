@@ -5,7 +5,7 @@ html, body {
 }
 
 body {
-    background-image: url('bg.jpg');
+    background-image: url('../bg.jpg');
     background-size: cover;
     font-family: ubuntu;
 }
@@ -32,7 +32,7 @@ body {
     height: 32px;
     top: 5px;
     right: 5px;
-    background: url('system-shutdown.png') no-repeat center center;
+    background: url('../icons/system-shutdown.png') no-repeat center center;
     background-size: 100%;
     cursor: pointer;
 }
@@ -87,6 +87,9 @@ header {
     cursor: pointer;
     text-align: left;
     -webkit-transition-duration: .5s;
+}
+
+#user_table tr {
     font-size: 1.2em;
 }
 
@@ -102,10 +105,15 @@ header {
     padding-right: 3em;
 }
 
-#user_table img, #session_table img {
+#user_table img {
     width: 48px;
     height: 48px;
     border-radius: 3px;
+}
+
+#session_table img {
+    width: 32px;
+    height: 32px;
 }
 
 td.countdown {
@@ -118,8 +126,12 @@ td.countdown {
     text-align: right;
 }
 
-.active td.countdown {
+.active td.countdown, .loggedin td.countdown {
     opacity: 1;
+}
+
+.loggedin td.countdown {
+    color: #9ED604;
 }
 
 tr.password, .other-user-login {

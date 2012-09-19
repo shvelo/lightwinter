@@ -1,60 +1,61 @@
 <!DOCTYPE html>
-
-<link rel="stylesheet" href="style.css">
+<title>Lightdm</title>
+<meta charset="utf-8">
+<link rel="stylesheet" href="css/style.css">
 
 <div id="corner">
     <a id="shutdown"></a>
 </div>
 
 <div class="box-wrapper">
-<div class="box">
-<div class="content">
-<div class="left">
-    <header>User</header>
-    <table id="user_table">
-        <tr class="other-user">
-            <td><img src="avatar-default.png"></td>
-            <td>Other</td>
-            <td class="countdown"></td>
-        </tr>
-        <tr class="other-user-login">
-            <td colspan="4">
-                    <span>Name</span>
-                    <div class="label">
-                        <div class="input name" contenteditable>Name</div>
-                    </div>
-                    <div class="pass-wrapper">
-                    <span>Password</span>
-                    <div class="label">
-                        <div class="input pass" contenteditable>Password</div>
-                    </div>
-                    </div>
-            </td>
-        </tr>
-        <tr class="password">
-            <td colspan="4">
-                    <div class="label">
-                        <div class="input" contenteditable>Password</div>
-                    </div>
-            </td>
-        </tr>
-    </table>
-</div>
-<div class="right">
-    <header>Session</header>
-    <table id="session_table"></table>
-</div>
-<div style="clear:both"></div>
-</div>
-</div>
+    <div class="box">
+        <div class="content">
+            <div class="left">
+                <header>User</header>
+                <table id="user_table">
+                    <tr class="other-user">
+                        <td><img src="icons/avatar-default.png"></td>
+                        <td>Other</td>
+                        <td class="countdown"></td>
+                    </tr>
+                    <tr class="other-user-login">
+                        <td colspan="4">
+                            <span>Name</span>
+                            <div class="label">
+                                <div class="input name" contenteditable></div>
+                            </div>
+                            <div class="pass-wrapper">
+                                <span>Password</span>
+                                <div class="label">
+                                    <div class="input pass" contenteditable></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="password">
+                        <td colspan="4">
+                            <div class="label">
+                                <div class="input" contenteditable></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="right">
+                <header>Session</header>
+                <table id="session_table"></table>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
 </div>
 
 <div style="display: none">
     <table id="user-template">
-        <tr data-id="{{=id}}" class="user">
+        <tr data-id="{{=id}}" class="{{=classname}}">
             <td><img src="{{=image}}"></td>
             <td>{{=name}}</td>
-            <td class="countdown"></td>
+            <td class="countdown">{{=countdown}}</td>
         </tr>
     </table>
     <table id="session-template">
@@ -65,7 +66,7 @@
     </table>
 </div>
 
-<script src="lightdm.js"></script>
-<script src="t.min.js"></script>
-<script src="jquery.min.js"></script>
-<script src="script.js"></script>
+<script src="js/lightdm.js"></script>
+<script src="js/t.min.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/script.js"></script>
