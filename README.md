@@ -20,16 +20,9 @@ Edit `/etc/lightdm/lightdm.conf` and set `greeter-session` to `lightdm-webkit-gr
 
 ### Install theme
 
-Copy files to `/usr/share/lightdm-webkit/themes/lightwinter`.  
-Edit `/etc/lightdm-webkit-greeter.conf` and set `webkit-theme` to `lightwinter`, like this:
+    $ bash INSTALL
 
-    [greeter]
-    background=/usr/share/backgrounds/warty-final-ubuntu.png
+or
 
-    theme-name=Radiance
-    webkit-theme=lighwinter
-    font-name=Ubuntu 11
-    xft-antialias=true
-    xft-dpi=96
-    xft-hintstyle=slight
-    xft-rgba=rgb
+    $ chmod +x INSTALL
+    $ ./INSTALL

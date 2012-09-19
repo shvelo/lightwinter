@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+sudo cp . /usr/share/lightdm-webkit/themes/
+
+config=`cat /etc/lightdm/lightdm-webkit-greeter.conf`
+sudo echo ${config//^webkit-theme=(.*)$/lightwinter} >/etc/lightdm/lightdm-webkit-greeter.conf
+
+exit
