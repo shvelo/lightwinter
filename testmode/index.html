@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="style.css">
+
+<a id="shutdown"></a>
+
+<div class="box-wrapper">
+<div class="box">
+<div class="content">
+    <table id="user_table">
+        <tr data-id="nick" class="user">
+            <td><img src="avatar-default.png"></td>
+            <td>Nick Shvelidze</td>
+            <td class="countdown"></td>
+        </tr>
+        <tr class="other-user">
+            <td><img src="avatar-default.png"></td>
+            <td>Other</td>
+            <td class="countdown"></td>
+        </tr>
+        <tr class="password">
+            <td colspan="4">
+                    <div class="label">
+                        <div class="input" contenteditable>Password</div>
+                    </div>
+            </td>
+        </tr>
+    </table>
+    <table id="message_table"><td id="message_label"></td></table>
+</div>
+</div>
+</div>
+
+<script src="lightdm.js"></script>
+<script src="jquery.min.js"></script>
+<script src="script.js"></script>
