@@ -1,22 +1,67 @@
 <!DOCTYPE html>
 
-<style>
-    @import url('style.css');
-</style>
+<link rel="stylesheet" href="style.css">
+
+<div id="corner">
+    <a id="shutdown"></a>
+</div>
 
 <div class="box-wrapper">
 <div class="box">
 <div class="content">
-    <table id="user_table"></table>
-    <table id="message_table" style="margin: auto; display: none;"><td id="message_label"></td></table>
-    <table id="password_table" style="margin: auto; display: none; color: red;"><tr>
-    <td id="password_prompt"></td>
-    <td><form action="javascript: provide_secret()"><input id="password_entry" type="password" /></form></td>
-    </tr></table>
+<div class="left">
+    <header>User</header>
+    <table id="user_table">
+        <tr class="other-user">
+            <td><img src="avatar-default.png"></td>
+            <td>Other</td>
+            <td class="countdown"></td>
+        </tr>
+        <tr class="other-user-login">
+            <td colspan="4">
+                    <div class="label">
+                        <div class="input name" contenteditable>Name</div>
+                    </div>
+                    <div class="label pass-wrapper">
+                        <div class="input pass" contenteditable>Password</div>
+                    </div>
+            </td>
+        </tr>
+        <tr class="password">
+            <td colspan="4">
+                    <div class="label">
+                        <div class="input" contenteditable>Password</div>
+                    </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="right">
+    <header>Session</header>
+    <table id="session_table"></table>
+</div>
+<div style="clear:both"></div>
 </div>
 </div>
 </div>
 
+<div style="display: none">
+    <table id="user-template">
+        <tr data-id="{{=id}}" class="user">
+            <td><img src="{{=image}}"></td>
+            <td>{{=name}}</td>
+            <td class="countdown"></td>
+        </tr>
+    </table>
+    <table id="session-template">
+        <tr data-id="{{=id}}" class="session" title="{{=comment}}">
+            <td><img src="{{=image}}"></td>
+            <td>{{=name}}</td>
+        </tr>
+    </table>
+</div>
+
+<script src="lightdm.js"></script>
+<script src="t.min.js"></script>
 <script src="jquery.min.js"></script>
 <script src="script.js"></script>
-

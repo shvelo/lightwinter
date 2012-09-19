@@ -1,55 +1,19 @@
 var password_prompt = false;
 var selected_user = null;
-var time_remaining = 0
+var time_remaining = 0;
+var session = lightdm.session;
 
-function show_prompt(text)
-{
-   password_prompt = true;
-
-   var label = $('#password_prompt');
-   label.html(text);
-   
-   var user_table = $('#user_table')[0];   
-   for (i in user_table.rows)
-   {
-       var row = user_table.rows[i];
-       if (row.id != ('user_' + selected_user) && row.style != null)
-           row.style.opacity = 0.25;
-   }
-
-   var entry = $('#password_entry');
-   entry.val('');
-
-   var table = $('#password_table');
-
-   entry.focus();
+function show_prompt(text) {
 }
 
-function show_message(text)
-{
-   table = document.getElementById('message_table');
-   label = document.getElementById('message_label');
-   label.innerHTML = text;
-   if (text.length > 0)
-       table.style.display = "table";
-   else
-       table.style.display = "none";
+function show_message(text) {
 }
 
-function show_error(text)
-{
+function show_error(text) {
    show_message (text);
 }
 
-function reset()
-{
-   var user_table = document.getElementById('user_table');   
-   for (i in user_table.rows)
-   {
-       row = user_table.rows[i];
-       if (row.style != null)
-           row.style.opacity = 1;
-   }
+function reset() {
    var table = $('#password_table');
    table.css('display',"none");
    password_prompt = false;
@@ -57,8 +21,7 @@ function reset()
 
 var loading_text = '';
 
-function throbber()
-{
+function throbber() {
    loading_text += '.';
    if (loading_text == '....')
        loading_text = '.'
@@ -67,79 +30,152 @@ function throbber()
    setTimeout(throbber, 1000);
 }
 
-function authentication_complete()
-{
-   if (lightdm.is_authenticated)
-       lightdm.login (lightdm.authentication_user, lightdm.default_session);
-   else
+function authentication_complete() {
+   if (lightdm.is_authenticated) {
+       lightdm.login (lightdm.authentication_user, session);
+   } else {
        show_message ("Authentication Failed");
+       $('.password, .pass-wrapper').addClass('error');
+   }
 
    reset ();
    setTimeout(throbber, 1000);
 }
 
-function timed_login(user)
-{
+function timed_login(user) {
    lightdm.login (lightdm.timed_login_user);
    setTimeout(throbber, 1000);
 }
 
-function start_authentication(username)
-{
+function start_authentication(username) {
    lightdm.cancel_timed_login ();
-   var label = $('#countdown_label')[0];
-   if (label != null)
-       label.style.visibility = "hidden";
+   $('#user_table tr').removeClass('active');
 
-   show_message("");
    if (!password_prompt) {
        selected_user = username;
        lightdm.start_authentication(username);
+       
+       password_prompt = true;
+       $('tr.password').insertAfter('[data-id="'+selected_user+'"]').slideDown('slow');
+       $('tr.password .input').focus();
    }
 }
 
-function provide_secret()
-{
+function cancel_authentication() {
+    lightdm.cancel_authentication();
+    password_prompt = false;
+    $('.password, .pass-wrapper').removeClass('error');
+    $('.password .input, .wrapper').text('');
+    $('.password, .other-user-login').slideUp('slow');
+}
+
+function provide_secret() {
    var entry = $('#password_entry');
    lightdm.provide_secret(entry.val());
 }
 
-function countdown()
-{
-   var label = $('#countdown_label');
-   label.html(' in ' + time_remaining + ' seconds');
+function countdown() {
+   var label = $('.active .countdown');
+   label.html(time_remaining);
    time_remaining--;
    if (time_remaining >= 0)
        setTimeout(countdown, 1000);
 }
 
 $(function(){
-for (i in lightdm.users)
-{
-   var user = lightdm.users[i];
-
-   if (user.image.length > 0)
-      image = user.image;
-   else
-      image = 'avatar-default.png';
-   
-   $('#user_table').append('<tr id="user_' + user.name +'" onclick="start_authentication(\'' + user.name + '\')">');
-   
-   $('#user_' + user.name).
-    append('<td><img src="' + image + '"></td>').
-    append('<td>' + user.display_name + '</td>');
-   
-   if (user.name == lightdm.timed_login_user && lightdm.timed_login_delay > 0)
-       $('#user_' + user.name).append('<td id="countdown_label">');
-}
-
-$('#user_table').append('<tr id="other_user" onclick="other_user()">');
-   
-$('#other_user').
-    append('<td><img src="avatar-default.png"></td>').
-    append('<td>Other</td>');
-
-time_remaining = lightdm.timed_login_delay;
-if (time_remaining > 0)
-    countdown();
+    if(lightdm.can_shutdown) {
+        $('#shutdown').addClass('can');
+    }
+    
+    $('#shutdown').click(lightdm.shutdown);
+    
+    var user_template = new t($('#user-template').html());
+    
+    for(i in lightdm.users.reverse()) {
+        var user = lightdm.users[i];
+        $('#user_table').prepend(user_template.render({
+            id: user.name,
+            name: user.display_name,
+            image: user.image,
+            logged_in: user.logged_in
+        }));
+    }
+    
+    var session_template = new t($('#session-template').html());
+    
+    for(i in lightdm.sessions) {
+        var sess = lightdm.sessions[i];
+        
+        var image;
+        switch(sess.key){
+            case 'gnome':
+                image = "gnome.png";
+                break;
+            default:
+                image = "default.png";
+                break;
+        }
+        
+        $('#session_table').prepend(session_template.render({
+            id: sess.key,
+            name: sess.name,
+            comment: sess.comment,
+            image: image
+        }));
+    }
+    
+    $('#session_table .session[data-id="'+ lightdm.session +'"]').addClass('active');
+    
+    $('.user').click(function(){
+        cancel_authentication();
+        start_authentication($(this).data('id'));
+    });
+    
+    $('.other-user').click(function(){
+        cancel_authentication();
+        $('.other-user-login').slideDown('slow');
+        $('.other-user-login .name').focus();
+    });
+    
+    $('.session').click(function(){
+        lightdm.cancel_timed_login ();
+        $('#user_table tr').removeClass('active');
+        
+        $('#session_table .session').removeClass('active');
+        session = $(this).data('id');
+        $(this).addClass('active');
+    });
+    
+    $('.input').on('focus', function(){
+        $(this).text('').off('focus');
+    });
+    
+    $('.password .input').keydown(function(event) {
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            lightdm.provide_secret($(this).text());
+        }
+    });
+    
+    $('.other-user-login .name').keydown(function(event) {
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            lightdm.start_authentication($(this).text());
+            $('.pass-wrapper').slideDown('slow');
+            $('.other-user-login .pass').focus();
+        }
+    });
+    
+    $('.other-user-login .pass').keydown(function(event) {
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            lightdm.provide_secret($(this).text());
+        }
+    });
+    
+    $('#user_table .user[data-id="'+ lightdm.timed_login_user +'"]').addClass('active');
+    
+    time_remaining = lightdm.timed_login_delay;
+    if (time_remaining > 0)
+        countdown();
 });
