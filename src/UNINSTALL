@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+CONF="/etc/lightdm/lightdm-webkit-greeter.conf"
+
+if [ -f ${CONF}-bak ]
+then
+  sudo cp ${CONF}-bak ${CONF}
+else
+  sudo sed -i "s/\(webkit-theme *= *\).*/\1webkit/" $CONF
+fi
+
+exit

@@ -10,6 +10,8 @@ packages : clean
 	cp -rf src $(BUILDDIR)
 install :
 	bash src/INSTALL
+uninstall : 
+    bash src/UNINSTALL
 clean : 
 	rm -rf build/*
 .PHONY clean : 
