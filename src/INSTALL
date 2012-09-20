@@ -8,7 +8,7 @@ then
   sudo mkdir -p ${THM}
 fi
 
-sudo cp -rf ${DIR} ${THM}/
+sudo cp -rf ${DIR} ${THM}/lightwinter
 
 if [ -f ${CONF} ]
 then
