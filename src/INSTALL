@@ -15,11 +15,13 @@ then
   sudo cp ${CONF} ${CONF}-bak
 fi
 
-config=`cat ${CONF}`
-newconfig=${config//^webkit-theme=(.*)$/lightwinter}
+#config=`cat ${CONF}`
+#newconfig=${config//^webkit-theme=(.*)$/lightwinter}
 
-sudo cat >${CONF} <<EOL
-${newconfig}
-EOL
+sudo sed -i "s/\(webkit-theme *= *\).*/\1lightwinter/" $CONF
+
+#sudo cat >${CONF} <<EOL
+#${newconfig}
+#EOL
 
 exit
