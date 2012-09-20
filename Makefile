@@ -11,7 +11,7 @@ packages : clean
 install :
 	bash src/INSTALL
 uninstall : 
-    bash src/UNINSTALL
+	bash src/UNINSTALL
 clean : 
 	rm -rf build/*
 .PHONY clean : 
