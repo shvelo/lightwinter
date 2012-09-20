@@ -20,9 +20,4 @@ Edit `/etc/lightdm/lightdm.conf` and set `greeter-session` to `lightdm-webkit-gr
 
 ### Install theme
 
-    $ bash INSTALL
-
-or
-
-    $ chmod +x INSTALL
-    $ ./INSTALL
+    $ sudo make install
