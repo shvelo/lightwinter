@@ -21,3 +21,7 @@ Edit `/etc/lightdm/lightdm.conf` and set `greeter-session` to `lightdm-webkit-gr
 ### Install theme
 
     $ sudo make install
+
+## Uninstall
+
+    $ sudo make uninstall
