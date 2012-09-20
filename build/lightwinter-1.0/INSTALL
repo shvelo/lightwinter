@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+THM="/usr/share/lightdm-webkit/themes"
+CONF="/etc/lightdm/lightdm-webkit-greeter.conf"
+
+if [ ! -d ${THM} ]
+then
+  sudo mkdir -p ${THM}
+fi
+
+sudo cp -rf ${DIR} ${THM}/
+
+if [ -f ${CONF} ]
+then
+  sudo cp ${CONF} ${CONF}-bak
+fi
+
+config=`cat ${CONF}`
+sudo echo ${config//^webkit-theme=(.*)$/lightwinter} >${CONF}
+
+exit

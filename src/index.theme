@@ -1,0 +1,6 @@
+[theme]
+name=Lightwinter
+description=Winter theme
+engine=lightdm-webkit-greeter
+url=index.html
+session=lxsession
